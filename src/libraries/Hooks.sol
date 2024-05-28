@@ -261,6 +261,9 @@ library Hooks {
             // dynamic fee pools that do not want to override the cache fee, return 0 otherwise they return a valid fee with the override flag
             if (key.fee.isDynamicFee()) lpFeeOverride = result.parseFee();
 
+            // skip this logic for the case where amountToSwap is 0
+            amountToSwap = result.parseAmountToSwap() > 0 ? result.parseAmountToSwap() : amountToSwap;
+
             // skip this logic for the case where the hook return is 0
             if (self.hasPermission(BEFORE_SWAP_RETURNS_DELTA_FLAG)) {
                 hookReturn = BeforeSwapDelta.wrap(result.parseReturnDelta());

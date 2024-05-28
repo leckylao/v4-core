@@ -26,4 +26,11 @@ library ParseBytes {
             hookReturn := mload(add(result, 0x40))
         }
     }
+
+    function parseAmountToSwap(bytes memory result) internal pure returns (int256 amountToSwap) {
+        // equivalent: (,,, amountToSwap) = abi.decode(result, (bytes4, int256, uint24, int256));
+        assembly {
+            amountToSwap := mload(add(result, 0x80))
+        }
+    }
 }
